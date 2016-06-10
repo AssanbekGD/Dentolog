@@ -1,0 +1,5 @@
+/* CSS declarations go here */
+.content, .content-wrapper, .skin-blue, .wrapper, .body, #__blaze-root
+{
+  height: 200vh;
+}

@@ -1,0 +1,42 @@
+<template name="registerPatient">
+  <section class="content-header">
+      <h1 class="align-center">
+
+      </h1>
+  </section>
+  <section class="content">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Личные данные</h3>
+        </div>
+        <div class="box-body">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+            <input id="rp-phone" type="text" class="form-control" placeholder="+7 700 123 45 67">
+          </div>
+          <br />
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input id="rp-email" type="text" class="form-control" value="{{email}}" placeholder="ivanov@mail.ru">
+          </div>
+          <br />
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input id="rp-full-name" type="text" class="form-control"  value="{{fullName}}" placeholder="ФИО">
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Расписание врачей</h3>
+        </div>
+        <div class="box-body" id="doctorSchedule">
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

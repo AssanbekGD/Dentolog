@@ -1,0 +1,36 @@
+<template name="createDoctor">
+  <section class="content-header">
+      <h1 class="align-center">
+
+      </h1>
+  </section>
+  <section class="content">
+    <div class="col-sm-10 col-sm-offset-1">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Личные данные врача</h3>
+        </div>
+        <div class="box-body">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+            <input id="cd-phone" type="text" class="form-control" placeholder="+7 700 123 45 67">
+          </div>
+          <br />
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input id="cd-email" type="text" class="form-control" value="{{email}}" placeholder="ivanov@mail.ru">
+          </div>
+          <br />
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input id="cd-full-name" type="text" class="form-control"  value="{{fullName}}" placeholder="ФИО">
+          </div>
+          <br />
+        </div>
+        <div class="box-footer">
+          <button id="cd-submit-button" type="submit" class="pull-right btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
