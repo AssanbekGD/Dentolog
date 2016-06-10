@@ -14,6 +14,14 @@
           <input type="text" class="form-control" id="register-email" placeholder="bla@bla.bla">
         </div>
         <div class="form-group">
+          <label>Клиника</label>
+          <select id="register-clinic" class="form-control">
+            {{#each clinics}}
+            <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
           <label for="register-password">Пароль</label>
           <input type="password" class="form-control" id="register-password" placeholder="пароль">
         </div>

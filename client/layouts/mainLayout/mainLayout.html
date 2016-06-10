@@ -3,10 +3,7 @@
     <header class="main-header">
       <!-- Logo -->
       <a href="../../index2.html" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        Dentolog
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -17,6 +14,20 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="http://image000.flaticon.com/icons/svg/128/128613.svg" class="user-image" alt="User Image">
+              <span class="hidden-xs">
+                {{#each clinic}}
+                <li>{{name}}</li>
+                {{/each}}
+              </span>
+            </a>
+          </li>
+          </ul>
+        </div>
       </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
@@ -45,6 +56,17 @@
           <li class="{{isActivePath '/createDoctor'}}">
             <a href="/createDoctor">
               <i class="fa fa-stethoscope"></i> <span>Добавить</span>
+            </a>
+          </li>
+          <li class="{{isActivePath '/createDoctorType'}}">
+            <a href="/createDoctorType">
+              <i class="fa fa-stethoscope"></i> <span>Добавить тип</span>
+            </a>
+          </li>
+          <li class="header">Клиники</li>
+          <li class="{{isActivePath '/createClinic'}}">
+            <a href="/createClinic">
+              <i class="fa fa-hospital-o"></i> <span>Добавить</span>
             </a>
           </li>
           <li class="header">Пользователи</li>

@@ -18,14 +18,31 @@
           <br />
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            <input id="cd-email" type="text" class="form-control" value="{{email}}" placeholder="ivanov@mail.ru">
+            <input id="cd-email" type="text" class="form-control" placeholder="ivanov@mail.ru">
           </div>
           <br />
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input id="cd-full-name" type="text" class="form-control"  value="{{fullName}}" placeholder="ФИО">
+            <input id="cd-full-name" type="text" class="form-control" placeholder="ФИО">
           </div>
           <br />
+          <div class="form-group">
+            <label>выберите клинику</label>
+            <select id="cd-clinic" class="form-control">
+              {{#each clinics}}
+              <option value="{{_id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <br />
+          <div class="form-group">
+            <label>выберите тип врача</label>
+            <select id="cd-doctor-type" class="form-control">
+              {{#each doctorTypes}}
+              <option value="{{_id}}">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
         </div>
         <div class="box-footer">
           <button id="cd-submit-button" type="submit" class="pull-right btn btn-primary">Submit</button>

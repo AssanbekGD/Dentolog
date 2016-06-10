@@ -37,3 +37,19 @@ FlowRouter.route('/registerPatient', {
       });
   }
 });
+
+FlowRouter.route('/createClinic', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createClinic'
+    });
+  }
+});
+
+FlowRouter.route('/createDoctorType', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createDoctorType'
+    });
+  }
+});

@@ -20,7 +20,7 @@ Template.registerPatient.onRendered(function(){
       eventCursor = Events.find(),
       thisTempl = this;
 
-  let handler = Tracker.autorun(function(){
+  let autorunFunction = function(){
     const doctors = doctorsCursor.fetch(),
           events = eventCursor.fetch(),
           resources = [],
@@ -42,7 +42,10 @@ Template.registerPatient.onRendered(function(){
       $('#doctorSchedule').fullCalendar('removeEvents', event.id);
       $('#doctorSchedule').fullCalendar('addEventSource', [event]);
     });
-  });
+  };
+
+  let handler = Tracker.autorun(autorunFunction);
+
 
   $('#doctorSchedule').fullCalendar({
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
@@ -108,6 +111,7 @@ Template.registerPatient.onRendered(function(){
         Session.set('patient-on-list', false);
       },
 		});
+  autorunFunction();
 });
 
 Template.registerPatient.events({
