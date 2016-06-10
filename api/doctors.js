@@ -1,13 +1,17 @@
 import {Mongo} from 'meteor/mongo';
 
-const Doctors = new Mongo.Collection('doctors');
+export const Doctors = new Mongo.Collection('doctors');
 
 if(Meteor.isServer)
 {
+  Meteor.publish('doctors', function doctorsPublication(){
+    return Doctors.find();
+  });
+
   Meteor.methods({
     'doctors.insert'(data)
     {
-      Doctors.insert(data);
+      return Doctors.insert(data);
     }
   });
 }

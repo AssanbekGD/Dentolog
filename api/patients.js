@@ -13,7 +13,7 @@ if(Meteor.isServer)
   Meteor.methods({
     'patients.insert'(data)
     {
-      Patients.insert(data);
+      return Patients.insert(data);
     }
   });
 }

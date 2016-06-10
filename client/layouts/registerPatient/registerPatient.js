@@ -2,8 +2,12 @@ import './registerPatient.html';
 
 import {Template} from 'meteor/templating';
 import {Patients} from '../../../api/patients.js';
+import {Doctors} from '../../../api/doctors.js';
+import {Events} from '../../../api/events.js';
 
 Meteor.subscribe('patients');
+Meteor.subscribe('doctors');
+Meteor.subscribe('events');
 
 Template.registerPatient.onCreated(function(){
   this.events = new ReactiveVar([]);
@@ -12,20 +16,47 @@ Template.registerPatient.onCreated(function(){
 });
 
 Template.registerPatient.onRendered(function(){
-  var thisTempl = this;
+  let doctorsCursor = Doctors.find(),
+      eventCursor = Events.find(),
+      thisTempl = this;
+
+  let handler = Tracker.autorun(function(){
+    const doctors = doctorsCursor.fetch(),
+          events = eventCursor.fetch(),
+          resources = [],
+          colors = ["green", "blue", "yellow", "red", "orange", "black"];
+
+    doctors.forEach(function(doctor, i){
+      let resource = {
+        id: doctor._id,
+        title: doctor.fullName,
+        eventColor: i < colors.length ? colors[i] : colors[i % colors.length]
+      };
+
+      resources.push(resource);
+      $('#doctorSchedule').fullCalendar('addResource', resource);
+    });
+
+    events.forEach(function(event){
+      event.id = event._id;
+      $('#doctorSchedule').fullCalendar('removeEvents', event.id);
+      $('#doctorSchedule').fullCalendar('addEventSource', [event]);
+    });
+  });
 
   $('#doctorSchedule').fullCalendar({
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
 			defaultView: 'agendaDay',
-			defaultDate: '2016-05-07',
+			defaultDate: Date.now(),
 			editable: true,
 			selectable: true,
 			eventLimit: true, // allow "more" link when too many events
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'agendaDay,agendaTwoDay,agendaWeek,month'
+				right: 'agendaDay,agendaWeek,month'
 			},
+      resources: [],
 			views: {
 				agendaTwoDay: {
 					type: 'agenda',
@@ -33,12 +64,6 @@ Template.registerPatient.onRendered(function(){
 					groupByResource: true
 				}
 			},
-			resources: [
-				{ id: 'a', title: 'Махмадиев' },
-				{ id: 'b', title: 'Беспаев', eventColor: 'green' },
-				{ id: 'c', title: 'Алимбекулы', eventColor: 'orange' },
-				{ id: 'd', title: 'Абдыразакова', eventColor: 'red' }
-			],
 			dayClick: function(date, jsEvent, view, resource) {
         var phone = $("#rp-phone").val(),
             email = $("#rp-email").val(),
@@ -47,15 +72,18 @@ Template.registerPatient.onRendered(function(){
 
         newEvent.start = date.toISOString();
         newEvent.end = date.add(60, 'm').toISOString();
-        newEvent.id = 123456;
-        newEvent.color = '#00b300';
         newEvent.title = `${fullName}
         (${phone})`;
         newEvent.resourceId = resource.id,
         thisTempl.newEvent.set(newEvent);
-        var currentEvents = [];
-        currentEvents.push(newEvent);
-        $('#doctorSchedule').fullCalendar('addEventSource', currentEvents);
+
+        Meteor.call('events.insert', newEvent, function(err, res){
+            if(!err)
+            {
+              newEvent.id = res;
+              $('#doctorSchedule').fullCalendar('addEventSource', [newEvent]);
+            }
+        });
 
         $("#rp-phone").val('');
         $("#rp-email").val('');
