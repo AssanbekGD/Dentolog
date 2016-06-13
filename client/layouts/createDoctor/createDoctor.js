@@ -50,8 +50,6 @@ Template.createDoctor.events({
         $email.val('');
         $name.val('');
         $surname.val('');
-        $clinic.val('');
-        $doctorType.val('');
       }
     });
   }

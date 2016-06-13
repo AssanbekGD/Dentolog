@@ -29,7 +29,7 @@ Template.registerPatient.onRendered(function(){
     doctors.forEach(function(doctor, i){
       let resource = {
         id: doctor._id,
-        title: doctor.fullName,
+        title: `${doctor.surname} ${doctor.name.charAt(0)}.`,
         eventColor: i < colors.length ? colors[i] : colors[i % colors.length]
       };
 
@@ -45,7 +45,6 @@ Template.registerPatient.onRendered(function(){
   };
 
   let handler = Tracker.autorun(autorunFunction);
-
 
   $('#doctorSchedule').fullCalendar({
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
@@ -67,15 +66,37 @@ Template.registerPatient.onRendered(function(){
 					groupByResource: true
 				}
 			},
+      eventDrop: function(event, delta){
+        let start = event.start,
+            end = event.end;
+
+        const returnObject = Meteor.call('events.update', event._id, start.format(), end.format(), event.resourceId, function(err)
+        {
+          if(err)
+          {
+            toastr.error(err.reason);
+          }
+          else
+          {
+            toastr.success('Пациент перезаписан');
+          }
+        });
+      },
 			dayClick: function(date, jsEvent, view, resource) {
-        var phone = $("#rp-phone").val(),
-            email = $("#rp-email").val(),
-            fullName = $("#rp-full-name").val(),
-            newEvent = {};
+        var $phone = $("#rp-phone"), phone = $phone.val(),
+            $email = $("#rp-email"), email = $email.val(),
+            $name = $("#rp-name"), name = $name.val(),
+            $surname = $("#rp-surname"), surname = $surname.val(),
+            newEvent = {},
+            hasEmptyField = false,
+            highlightClass = 'red-border';
+
+        if(!validateFields([$phone, $email, $name, $surname], highlightElement, highlightClass))
+          return ;
 
         newEvent.start = date.toISOString();
         newEvent.end = date.add(60, 'm').toISOString();
-        newEvent.title = `${fullName}
+        newEvent.title = `${surname} ${name.charAt(0)}.
         (${phone})`;
         newEvent.resourceId = resource.id,
         thisTempl.newEvent.set(newEvent);
@@ -88,14 +109,16 @@ Template.registerPatient.onRendered(function(){
             }
         });
 
-        $("#rp-phone").val('');
-        $("#rp-email").val('');
-        $("#rp-full-name").val('');
+        $phone.val('');
+        $email.val('');
+        $name.val('');
+        $surname.val('');
+
         Session.set("rp-phone", "");
 
         if(!Session.get('patient-on-list'))
         {
-          let data = { phone, email, fullName };
+          let data = { phone, email, name, surname };
 
           Meteor.call('patients.insert', data, function(err){
             if(err)
@@ -122,7 +145,7 @@ Template.registerPatient.events({
 });
 
 Template.registerPatient.helpers({
-  email()
+  patientData()
   {
     let phone = Session.get('rp-phone'),
         patient = Patients.find({phone}).fetch()[0];
@@ -130,22 +153,7 @@ Template.registerPatient.helpers({
     if(patient)
     {
       Session.set('patient-on-list', true);
-      return patient.email;
-    }
-    else
-    {
-      return '';
-    }
-  },
-  fullName()
-  {
-    let phone = Session.get('rp-phone'),
-        patient = Patients.find({phone}).fetch()[0];
-
-    if(patient)
-    {
-      Session.set('patient-on-list', true);
-      return patient.fullName;
+      return patient;
     }
     else
     {
@@ -153,3 +161,33 @@ Template.registerPatient.helpers({
     }
   }
 });
+
+function validateFields(jqElements, highLightFunction, className)
+{
+  let hasEmptyField = false;
+
+  for(let i = 0, len = jqElements.length; i < len; i++)
+  {
+    if(!jqElements[i].val().length)
+    {
+      highLightFunction(jqElements[i], className);
+      hasEmptyField = true;
+    }
+  }
+
+  if(hasEmptyField)
+  {
+    toastr.error('Заполните обязательные поля');
+    return false;
+  }
+
+  return true;
+}
+
+function highlightElement(jqElement, className)
+{
+  jqElement.addClass(className);
+  setTimeout(function(){
+    jqElement.removeClass(className);
+  }, 4000);
+}

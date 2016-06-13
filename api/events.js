@@ -11,6 +11,18 @@ if(Meteor.isServer){
     'events.insert'(data)
     {
       return Events.insert(data);
+    },
+    'events.update'(id, start, end, resourceId)
+    {
+      console.log(`id is ${id}, start is ${start}, end is ${end}`);
+      Events.update({_id: id},
+      {
+        $set: {
+          start: start,
+          end: end,
+          resourceId: resourceId
+        }
+      });
     }
   });
 };

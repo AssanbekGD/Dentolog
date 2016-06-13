@@ -17,13 +17,18 @@
           </div>
           <br />
           <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            <input id="rp-email" type="text" class="form-control" value="{{email}}" placeholder="ivanov@mail.ru">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input id="rp-name" type="text" class="form-control"  value="{{patientData.name}}" placeholder="Имя">
           </div>
           <br />
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input id="rp-full-name" type="text" class="form-control"  value="{{fullName}}" placeholder="ФИО">
+            <input id="rp-surname" type="text" class="form-control"  value="{{patientData.surname}}" placeholder="Фамилия">
+          </div>
+          <br />
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input id="rp-email" type="text" class="form-control" value="{{patientData.email}}" placeholder="ivanov@mail.ru">
           </div>
           <br />
         </div>
