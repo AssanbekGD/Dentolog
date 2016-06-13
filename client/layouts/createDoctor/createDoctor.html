@@ -6,48 +6,55 @@
   </section>
   <section class="content">
     <div class="col-sm-10 col-sm-offset-1">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">Личные данные врача</h3>
+      <form id="cd-form" action="#" method="post">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Личные данные врача</h3>
+          </div>
+          <div class="box-body">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
+              <input required id="cd-phone" type="text" class="form-control" placeholder="+7 700 123 45 67">
+            </div>
+            <br />
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input required id="cd-name" type="text" class="form-control" placeholder="Имя">
+            </div>
+            <br />
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <input required id="cd-surname" type="text" class="form-control" placeholder="Фамилия">
+            </div>
+            <br />
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+              <input required id="cd-email" type="text" class="form-control" placeholder="ivanov@mail.ru">
+            </div>
+            <br />
+            <div class="form-group">
+              <label>выберите клинику</label>
+              <select id="cd-clinic" class="form-control">
+                {{#each clinics}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <br />
+            <div class="form-group">
+              <label>выберите тип врача</label>
+              <select id="cd-doctor-type" class="form-control">
+                {{#each doctorTypes}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="pull-right btn btn-primary">Submit</button>
+          </div>
         </div>
-        <div class="box-body">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-phone-square"></i></span>
-            <input id="cd-phone" type="text" class="form-control" placeholder="+7 700 123 45 67">
-          </div>
-          <br />
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            <input id="cd-email" type="text" class="form-control" placeholder="ivanov@mail.ru">
-          </div>
-          <br />
-          <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input id="cd-full-name" type="text" class="form-control" placeholder="ФИО">
-          </div>
-          <br />
-          <div class="form-group">
-            <label>выберите клинику</label>
-            <select id="cd-clinic" class="form-control">
-              {{#each clinics}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-          <br />
-          <div class="form-group">
-            <label>выберите тип врача</label>
-            <select id="cd-doctor-type" class="form-control">
-              {{#each doctorTypes}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-        </div>
-        <div class="box-footer">
-          <button id="cd-submit-button" type="submit" class="pull-right btn btn-primary">Submit</button>
-        </div>
-      </div>
+      </form>
     </div>
   </section>
 </template>

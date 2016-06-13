@@ -19,15 +19,24 @@ Template.createDoctor.helpers({
 });
 
 Template.createDoctor.events({
-  'click #cd-submit-button'(e, t)
+  'submit #cd-form'(e, t)
   {
-    const data = {
-      phone: $('#cd-phone').val(),
-      email: $('#cd-email').val(),
-      fullName: $('#cd-full-name').val(),
-      clinic: $("#cd-clinic").val(),
-      doctorType: $("#cd-doctor-type").val()
-    };
+    e.preventDefault();
+
+    const $phone = $('#cd-phone'),
+          $email = $('#cd-email'),
+          $name = $('#cd-name'),
+          $surname = $('#cd-surname'),
+          $clinic = $("#cd-clinic"),
+          $doctorType = $("#cd-doctor-type"),
+          data = {
+            phone: $phone.val(),
+            email: $email.val(),
+            name: $name.val(),
+            surname: $surname.val(),
+            clinic: $clinic.val(),
+            doctorType: $doctorType.val()
+          };
 
     Meteor.call('doctors.insert', data, function(err){
       if(err)
@@ -37,9 +46,12 @@ Template.createDoctor.events({
       else
       {
         toastr.success('новый врач добавлен');
-        $('#cd-phone').val('');
-        $('#cd-email').val('');
-        $('#cd-full-name').val('');
+        $phone.val('');
+        $email.val('');
+        $name.val('');
+        $surname.val('');
+        $clinic.val('');
+        $doctorType.val('');
       }
     });
   }
