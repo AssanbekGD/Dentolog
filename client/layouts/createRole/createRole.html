@@ -1,0 +1,32 @@
+<template name="createRole">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Добавьте роль пользователя</h3>
+    </div>
+    <form role="form" id="cr-form">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="register-phone">Название</label>
+          <input required type="text" class="form-control" id="cr-role-name" placeholder="clinic-admin">
+        </div>
+        <div class="box-footer">
+          <button id="cr-submit" type="submit" class="btn btn-primary">Создать</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="box-body">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th style="width: 10px">№</th>
+        <th>Роль</th>
+      </tr>
+      {{#each roles}}
+      <tr>
+        <td>{{incIndex @index}}</td>
+        <td>{{name}}</td>
+      </tr>
+      {{/each}}
+    </tbody></table>
+  </div>
+</template>

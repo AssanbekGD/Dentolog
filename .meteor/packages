@@ -44,3 +44,6 @@ voodooltd:fullcalendar
 
 #for using sessions
 session
+
+#reactive table
+aslagle:reactive-table

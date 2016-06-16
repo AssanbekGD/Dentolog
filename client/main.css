@@ -8,3 +8,8 @@
 {
   border: 1px solid red !important;
 }
+
+.reactive-table-options
+{
+  opacity: 0;
+}

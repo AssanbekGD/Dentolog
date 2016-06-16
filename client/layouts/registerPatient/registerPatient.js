@@ -53,6 +53,7 @@ Template.registerPatient.onRendered(function(){
 			editable: true,
 			selectable: true,
 			eventLimit: true, // allow "more" link when too many events
+      eventOverlap: false,
 			header: {
 				left: 'prev,next today',
 				center: 'title',
@@ -83,7 +84,7 @@ Template.registerPatient.onRendered(function(){
         });
       },
 			dayClick: function(date, jsEvent, view, resource) {
-        var $phone = $("#rp-phone"), phone = $phone.val(),
+        let $phone = $("#rp-phone"), phone = $phone.val(),
             $email = $("#rp-email"), email = $email.val(),
             $name = $("#rp-name"), name = $name.val(),
             $surname = $("#rp-surname"), surname = $surname.val(),
@@ -138,13 +139,49 @@ Template.registerPatient.onRendered(function(){
 });
 
 Template.registerPatient.events({
+  'click .reactive-table tr'(e, t)
+  {
+    let phone = $(e.currentTarget).find('.phone').html();
+    $('#rp-phone').val(phone);
+    Session.set('rp-phone', phone);
+  },
   'keyup #rp-phone'(e, t)
   {
     Session.set('rp-phone', e.target.value);
   },
+  'keyup .rp.form-control'(e, t)
+  {
+    let phone = $("#rp-phone").val(),
+        email = $("#rp-email").val(),
+        name = $("#rp-name").val(),
+        surname = $("#rp-surname").val(),
+        combo = "",
+        reactiveTableInput = $('.reactive-table-input');
+
+    if(name !== "")
+      combo = `${combo} ${name} `;
+    if(surname !== "")
+      combo = `${combo} ${surname} `;
+    if(email !== "")
+      combo = `${combo} ${email} `;
+    if(phone !== "")
+      combo = `${combo} ${phone} `;
+
+    reactiveTableInput.val(combo);
+    reactiveTableInput.trigger('keyup');
+  }
 });
 
 Template.registerPatient.helpers({
+  settings()
+  {
+    return {
+        collection: Patients,
+        rowsPerPage: 5,
+        showFilter: true,
+        fields: ['name', 'surname', 'email', 'phone']
+    };
+  },
   patientData()
   {
     let phone = Session.get('rp-phone'),

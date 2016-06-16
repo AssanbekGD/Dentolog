@@ -53,3 +53,11 @@ FlowRouter.route('/createDoctorType', {
     });
   }
 });
+
+FlowRouter.route('/createRole', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createRole'
+    })
+  }
+});
