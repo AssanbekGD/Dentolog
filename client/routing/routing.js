@@ -58,6 +58,46 @@ FlowRouter.route('/createRole', {
   action(){
     BlazeLayout.render('mainLayout', {
       content: 'createRole'
-    })
+    });
+  }
+});
+
+FlowRouter.route('/appointment/:patientId', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'appointment'
+    });
+  }
+});
+
+FlowRouter.route('/createTreatment', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createTreatment'
+    });
+  }
+});
+
+FlowRouter.route('/createDiagnosis', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createDiagnosis'
+    });
+  }
+});
+
+FlowRouter.route('/createSymptom', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createSymptom'
+    });
+  }
+});
+
+FlowRouter.route('/patientHistory/:patientId', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'patientHistory'
+    });
   }
 });

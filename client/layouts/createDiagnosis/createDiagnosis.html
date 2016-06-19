@@ -1,16 +1,16 @@
-<template name="createRole">
+<template name="createDiagnosis">
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">Добавьте роль пользователя</h3>
+      <h3 class="box-title">Добавьте диагноз</h3>
     </div>
-    <form role="form" id="cr-form">
+    <form role="form" id="cd-form">
       <div class="box-body">
         <div class="form-group">
-          <label for="cr-role-name">Название</label>
-          <input required type="text" class="form-control" id="cr-role-name" placeholder="clinic-admin">
+          <label for="cd-diagnosis-name">Название</label>
+          <input required type="text" class="form-control" id="cd-diagnosis-name" placeholder="Пульпит">
         </div>
         <div class="box-footer">
-          <button id="cr-submit" type="submit" class="btn btn-primary">Создать</button>
+          <button id="cd-submit" type="submit" class="btn btn-primary">Создать</button>
         </div>
       </div>
     </form>
@@ -19,9 +19,9 @@
     <table class="table table-bordered">
       <tbody><tr>
         <th style="width: 10px">№</th>
-        <th>Роль</th>
+        <th>Диагноз</th>
       </tr>
-      {{#each roles}}
+      {{#each diagnoses}}
       <tr>
         <td>{{incIndex @index}}</td>
         <td>{{name}}</td>

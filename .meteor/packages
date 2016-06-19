@@ -47,3 +47,9 @@ session
 
 #reactive table
 aslagle:reactive-table
+
+#for beautiful select fields
+natestrauser:select2
+
+#for date and time
+momentjs:moment

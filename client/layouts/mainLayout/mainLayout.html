@@ -46,7 +46,7 @@
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
-          <li class="header">Клиенты</li>
+          <li class="header">Пациенты</li>
           <li class="{{isActivePath '/registerPatient'}}">
             <a href="/registerPatient">
               <i class="fa fa-user-plus"></i> <span>Добавить и записать</span>
@@ -67,6 +67,22 @@
           <li class="{{isActivePath '/createClinic'}}">
             <a href="/createClinic">
               <i class="fa fa-hospital-o"></i> <span>Добавить</span>
+            </a>
+          </li>
+          <li class="header">Приемы</li>
+          <li class="{{isActivePath '/createTreatment'}}">
+            <a href="/createTreatment">
+              <i class="fa fa-medkit"></i> <span>Добавить лечение</span>
+            </a>
+          </li>
+          <li class="{{isActivePath '/createDiagnosis'}}">
+            <a href="/createDiagnosis">
+              <i class="fa fa-medkit"></i> <span>Добавить диагноз</span>
+            </a>
+          </li>
+          <li class="{{isActivePath '/createSymptom'}}">
+            <a href="/createSymptom">
+              <i class="fa fa-medkit"></i> <span>Добавить симптом (жалоба)</span>
             </a>
           </li>
           <li class="header">Пользователи</li>

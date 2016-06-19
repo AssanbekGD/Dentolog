@@ -1,0 +1,55 @@
+import './patientHistory.html';
+import {Template} from 'meteor/templating';
+import {Patients} from '../../../api/patients.js';
+import {Appointments} from '../../../api/appointments.js';
+import {Symptoms} from '../../../api/symptoms.js';
+import {Diagnoses} from '../../../api/diagnoses.js';
+import {Treatments} from '../../../api/treatments.js';
+import {Doctors} from '../../../api/doctors.js';
+
+Meteor.subscribe('patients');
+Meteor.subscribe('appointments');
+Meteor.subscribe('symptoms');
+Meteor.subscribe('diagnoses');
+Meteor.subscribe('treatments');
+Meteor.subscribe('doctors');
+
+Template.patientHistory.onRendered(function patientHistoryOnRendered(){
+  Session.set('patientId', FlowRouter.getParam('patientId'));
+});
+
+Template.patientHistory.helpers({
+  patientId()
+  {
+    return FlowRouter.getParam('patientId');
+  },
+  patientName()
+  {
+    const currPatient = Patients.findOne({_id: Session.get('patientId')});
+
+    return `${currPatient.name} ${currPatient.surname}`;
+  },
+  appointments()
+  {
+    const appointmentsCursor = Appointments.find({patientId: Session.get('patientId')});
+    console.log(appointmentsCursor);
+    return appointmentsCursor;
+  },
+  getSymptomName(_id)
+  {
+    return Symptoms.findOne({_id}).name;
+  },
+  getDiagnosisName(_id)
+  {
+    return Diagnoses.findOne({_id}).name;
+  },
+  getTreatmentName(_id)
+  {
+    return Treatments.findOne({_id}).name;
+  },
+  getDoctorName(_id)
+  {
+    const doctor = Doctors.findOne({_id});
+    return `${doctor.name} ${doctor.surname}`;
+  }
+});

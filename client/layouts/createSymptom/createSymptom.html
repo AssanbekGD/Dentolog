@@ -1,16 +1,16 @@
-<template name="createRole">
+<template name="createSymptom">
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">Добавьте роль пользователя</h3>
+      <h3 class="box-title">Добавьте симптом</h3>
     </div>
-    <form role="form" id="cr-form">
+    <form role="form" id="cs-form">
       <div class="box-body">
         <div class="form-group">
-          <label for="cr-role-name">Название</label>
-          <input required type="text" class="form-control" id="cr-role-name" placeholder="clinic-admin">
+          <label for="cs-symptom-name">Название</label>
+          <input required type="text" class="form-control" id="cs-symptom-name" placeholder="Неприятный запах">
         </div>
         <div class="box-footer">
-          <button id="cr-submit" type="submit" class="btn btn-primary">Создать</button>
+          <button id="cs-submit" type="submit" class="btn btn-primary">Создать</button>
         </div>
       </div>
     </form>
@@ -19,9 +19,9 @@
     <table class="table table-bordered">
       <tbody><tr>
         <th style="width: 10px">№</th>
-        <th>Роль</th>
+        <th>Симптом</th>
       </tr>
-      {{#each roles}}
+      {{#each symptoms}}
       <tr>
         <td>{{incIndex @index}}</td>
         <td>{{name}}</td>

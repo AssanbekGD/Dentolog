@@ -67,6 +67,12 @@ Template.registerPatient.onRendered(function(){
 					groupByResource: true
 				}
 			},
+      eventClick(e, je, view)
+      {
+        const event = Events.findOne({_id: e._id});
+
+        FlowRouter.go(`/appointment/${event.patientId}?doctorId=${event.resourceId}`);
+      },
       eventDrop: function(event, delta){
         let start = event.start,
             end = event.end;
@@ -100,15 +106,7 @@ Template.registerPatient.onRendered(function(){
         newEvent.title = `${surname} ${name.charAt(0)}.
         (${phone})`;
         newEvent.resourceId = resource.id,
-        thisTempl.newEvent.set(newEvent);
-
-        Meteor.call('events.insert', newEvent, function(err, res){
-            if(!err)
-            {
-              newEvent.id = res;
-              $('#doctorSchedule').fullCalendar('addEventSource', [newEvent]);
-            }
-        });
+        newEvent.patientId = Session.get('patient-id');
 
         $phone.val('');
         $email.val('');
@@ -121,7 +119,7 @@ Template.registerPatient.onRendered(function(){
         {
           let data = { phone, email, name, surname };
 
-          Meteor.call('patients.insert', data, function(err){
+          Meteor.call('patients.insert', data, function(err, res){
             if(err)
             {
               toastr.error(err.reason);
@@ -129,10 +127,21 @@ Template.registerPatient.onRendered(function(){
             else
             {
               toastr.success('Новый пациент добавлен!');
+              newEvent.patientId = res;
             }
           });
         }
         Session.set('patient-on-list', false);
+
+        thisTempl.newEvent.set(newEvent);
+
+        Meteor.call('events.insert', newEvent, function(err, res){
+            if(!err)
+            {
+              newEvent.id = res;
+              $('#doctorSchedule').fullCalendar('addEventSource', [newEvent]);
+            }
+        });
       },
 		});
   autorunFunction();
@@ -190,6 +199,7 @@ Template.registerPatient.helpers({
     if(patient)
     {
       Session.set('patient-on-list', true);
+      Session.set('patient-id', patient._id);
       return patient;
     }
     else
