@@ -51,5 +51,25 @@ Template.patientHistory.helpers({
   {
     const doctor = Doctors.findOne({_id});
     return `${doctor.name} ${doctor.surname}`;
+  },
+  getAppointmentDuration(start, end)
+  {
+    const startTime = moment(start),
+          endTime = moment(end);
+
+    return beautifyMilliseconds(endTime.diff(startTime));
+  },
+  isEven(index)
+  {
+    return index % 2;
   }
 });
+
+function beautifyMilliseconds(ms)
+{
+  const hours = parseInt(ms / 3600000),
+        tempms = ms % 3600000,
+        minutes = parseInt(tempms / 60000);
+
+  return `${hours} часов, ${minutes} минут`;
+}

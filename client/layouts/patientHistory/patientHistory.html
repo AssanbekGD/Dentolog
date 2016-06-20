@@ -4,7 +4,7 @@
       <h3 class="box-title">{{patientName}}</h3>
     </div>
     {{#each appointments}}
-    <div class="box-body">
+    <div class="box-body {{#if isEven @index}}greyBackground{{/if}}">
       <strong><i class="fa fa-user-md margin-r-5"></i> Лечащий врач</strong>
       <p class="text-muted">
         {{getDoctorName doctorId}}
@@ -29,6 +29,11 @@
         {{#each treatmentId in treatments}}
         <h4 class="label label-info">{{getTreatmentName treatmentId}}</h4>
         {{/each}}
+      </p>
+      <hr>
+      <strong><i class="fa fa-pencil margin-r-5"></i> Длительность лечения</strong>
+      <p>
+        <h4 class="label label-info">{{getAppointmentDuration startTime endTime}}</h4>
       </p>
       <hr>
     </div>
