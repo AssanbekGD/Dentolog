@@ -7,15 +7,23 @@ import {Diagnoses} from '../../../api/diagnoses.js';
 import {Treatments} from '../../../api/treatments.js';
 import {Doctors} from '../../../api/doctors.js';
 
-Meteor.subscribe('patients');
-Meteor.subscribe('appointments');
-Meteor.subscribe('symptoms');
-Meteor.subscribe('diagnoses');
-Meteor.subscribe('treatments');
-Meteor.subscribe('doctors');
-
 Template.patientHistory.onRendered(function patientHistoryOnRendered(){
   Session.set('patientId', FlowRouter.getParam('patientId'));
+  Meteor.subscribe('patients');
+  Meteor.subscribe('appointments', function(err){
+    if(err)
+    {
+      toastr.error(err.reason);
+    }
+    else
+    {
+      $('.collapse').collapse();
+    }
+  });
+  Meteor.subscribe('symptoms');
+  Meteor.subscribe('diagnoses');
+  Meteor.subscribe('treatments');
+  Meteor.subscribe('doctors');
 });
 
 Template.patientHistory.helpers({

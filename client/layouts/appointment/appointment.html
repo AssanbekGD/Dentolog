@@ -19,22 +19,34 @@
               {{/each}}
             </select>
           </div>
-          <div class="form-group">
-            <label>Диагноз</label>
-            <select disabled required id="diagnoses-list" class="form-control diagnoses-select2" multiple="multiple" data-placeholder="выберите диагноз" style="width: 100%;">
-              {{#each diagnoses}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
+          <div class="row treatment-group">
+            <h4 class="col-sm-12">Лечение: 1</h4>
+            <div class="form-group col-sm-2">
+              <label>Номер зуба:</label>
+              <input type="text" class="form-control toothNumber" disabled placeholder="32">
+            </div>
+            <div class="form-group col-sm-5">
+              <label>Диагноз</label>
+              <select disabled required class="form-control diagnoses-select2 diagnoses-list" multiple="multiple" data-placeholder="выберите диагноз" style="width: 100%;">
+                {{#each diagnoses}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            <div class="form-group col-sm-5">
+              <label>Лечение</label>
+              <select disabled required class="form-control treatments-select2 treatments-list" multiple="multiple" data-placeholder="выберите лечение" style="width: 100%;">
+                {{#each treatments}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Лечение</label>
-            <select disabled required id="treatments-list" class="form-control treatments-select2" multiple="multiple" data-placeholder="выберите лечение" style="width: 100%;">
-              {{#each treatments}}
-              <option value="{{_id}}">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
+        </div>
+        <div class="box-footer">
+          <button id="add-treatment-group-button" class="btn btn-warning">
+            добавить лечение <i class="fa fa-plus-square"></i>
+          </button>
         </div>
         <div class="box-footer">
           <button id="start-button" class="btn btn-primary">Начать</button>
@@ -44,8 +56,5 @@
         </div>
       </form>
     </div>
-  </div>
-  <div class="col-sm-10 col-sm-offset-1">
-
   </div>
 </template>

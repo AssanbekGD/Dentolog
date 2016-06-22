@@ -18,3 +18,10 @@
 {
   background-color: #e4e4e4;
 }
+
+.treatment-group
+{
+  padding: 2em 0em;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}

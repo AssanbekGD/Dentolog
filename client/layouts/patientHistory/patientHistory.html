@@ -1,41 +1,69 @@
 <template name="patientHistory">
   <div class="box box-primary">
     <div class="box-header with-border">
-      <h3 class="box-title">{{patientName}}</h3>
+      <h3 class="box-title"><strong>Пациент: </strong>{{patientName}}</h3>
     </div>
     {{#each appointments}}
-    <div class="box-body {{#if isEven @index}}greyBackground{{/if}}">
-      <strong><i class="fa fa-user-md margin-r-5"></i> Лечащий врач</strong>
-      <p class="text-muted">
-        {{getDoctorName doctorId}}
-      </p>
-      <hr>
-      <strong><i class="fa fa-stethoscope margin-r-5"></i> Симптом(ы)</strong>
-      <p>
-        {{#each symptomId in symptoms}}
-        <h4 class="label label-danger">{{getSymptomName symptomId}}</h4>
-        {{/each}}
-      </p>
-      <hr>
-      <strong><i class="fa fa-pencil margin-r-5"></i> Диагноз(ы)</strong>
-      <p>
-        {{#each diagnosisId in diagnoses}}
-        <h4 class="label label-info">{{getDiagnosisName diagnosisId}}</h4>
-        {{/each}}
-      </p>
-      <hr>
-      <strong><i class="fa fa-pencil margin-r-5"></i> Лечение(я)</strong>
-      <p>
-        {{#each treatmentId in treatments}}
-        <h4 class="label label-info">{{getTreatmentName treatmentId}}</h4>
-        {{/each}}
-      </p>
-      <hr>
-      <strong><i class="fa fa-pencil margin-r-5"></i> Длительность лечения</strong>
-      <p>
-        <h4 class="label label-info">{{getAppointmentDuration startTime endTime}}</h4>
-      </p>
-      <hr>
+    <div class="panel-group" id="accordion{{@index}}" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title row">
+            <a role="button" class="row" data-toggle="collapse" data-parent="#accordion{{@index}}" href="#collapseOne{{@index}}" aria-expanded="true" aria-controls="collapseOne{{@index}}">
+              <div class="info-group col-sm-3">
+                <strong><i class="fa fa-user-md margin-r-5"></i> Лечащий врач:</strong>
+                <span class="text-muted">
+                  {{getDoctorName doctorId}};
+                </span>
+              </div>
+              <div class="info-group col-sm-6">
+                <strong><i class="fa fa-stethoscope margin-r-5"></i> Симптом(ы):</strong>
+                <span>
+                  {{#each symptomId in symptoms}}
+                  <h4 class="label label-danger">{{getSymptomName symptomId}}</h4>
+                  {{/each}};
+                </span>
+              </div>
+              <div class="info-group col-sm-3">
+                <strong><i class="fa fa-pencil margin-r-5"></i> Длительность:</strong>
+                <span>
+                  <h4 class="label label-info">{{getAppointmentDuration startTime endTime}}</h4>
+                </span>
+              </div>
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+          {{#each treatmentGroups}}
+            <div class="row">
+              <div class="info-group col-sm-4">
+                <strong><i class="fa fa-user-md margin-r-5"></i> Номер зуба:</strong>
+                <span class="text-muted">
+                  {{toothNumber}};
+                </span>
+              </div>
+              <div class="info-group col-sm-4">
+                <strong><i class="fa fa-user-md margin-r-5"></i> Диагноз(ы):</strong>
+                {{#each diagnosis in diagnoses}}
+                <span class="text-muted">
+                  {{getDiagnosisName diagnosis}}
+                </span>
+                {{/each}}
+              </div>
+              <div class="info-group col-sm-4">
+                <strong><i class="fa fa-user-md margin-r-5"></i> Лечение(я):</strong>
+                {{#each treatment in treatments}}
+                <span class="text-muted">
+                  {{getTreatmentName treatment}}
+                </span>
+                {{/each}}
+              </div>
+            </div>
+            <hr>
+          {{/each}}
+          </div>
+        </div>
+      </div>
     </div>
     {{/each}}
   </div>

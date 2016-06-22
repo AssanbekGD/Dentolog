@@ -26,7 +26,7 @@ Template.appointment.onRendered(function appointmentOnRendered(){
     }
     else
     {
-      $("#diagnoses-list").select2();
+      $(".diagnoses-list").select2();
     }
   });
 
@@ -48,33 +48,41 @@ Template.appointment.onRendered(function appointmentOnRendered(){
     }
     else
     {
-      $("#treatments-list").select2();
+      $(".treatments-list").select2();
     }
   });
-});
 
-Template.appointment.onRendered(function appointmentOnRendered(){
   $('#finish-button').parent().hide();
+  $('#add-treatment-group-button').parent().hide();
 });
 
 Template.appointment.helpers({
-  patientId(){
+  patientId()
+  {
     return Session.get('currentPatient')._id;
   },
-  patientName(){
+  patientName()
+  {
     const name = Session.get('currentPatient').name,
           surname = Session.get('currentPatient').surname;
 
     return `${name} ${surname}`;
   },
-  treatments(){
+  treatments()
+  {
     return Treatments.find();
   },
-  diagnoses(){
+  diagnoses()
+  {
     return Diagnoses.find();
   },
-  symptoms(){
+  symptoms()
+  {
     return Symptoms.find();
+  },
+  treatmentGroupIndex(index)
+  {
+    return index + 1;
   }
 });
 
@@ -84,9 +92,10 @@ Template.appointment.events({
   {
     e.preventDefault();
 
-    $('select').removeAttr('disabled');
+    $('select, input').removeAttr('disabled');
     $('select').select2({});
     $('#finish-button').parent().show();
+    $('#add-treatment-group-button').parent().show();
     $('#start-button').parent().hide();
 
     let now = moment().format();
@@ -97,26 +106,24 @@ Template.appointment.events({
     e.preventDefault();
 
     const $symptoms = $("#symptoms-list"),
-          $diagnoses = $("#diagnoses-list"),
-          $treatments = $("#treatments-list"),
           symptoms = $symptoms.val(),
-          diagnoses = $diagnoses.val(),
-          treatments = $treatments.val(),
           startTime = Session.get('startTime'),
           endTime = moment().format(),
           patientId = FlowRouter.getParam('patientId'),
-          doctorId = FlowRouter.getQueryParam('doctorId');
+          doctorId = FlowRouter.getQueryParam('doctorId'),
+          $treatmentGroups = $('.treatment-group'),
+          treatmentGroups = [];
 
-    data = {symptoms, diagnoses, treatments, startTime, endTime, patientId, doctorId};
+    for(let i = 0, len = $treatmentGroups.length; i < len; i ++)
+    {
+      treatmentGroups.push({
+        toothNumber: $($treatmentGroups[i]).find('.toothNumber').val(),
+        diagnoses: $($treatmentGroups[i]).find('.diagnoses-list').val(),
+        treatments: $($treatmentGroups[i]).find('.treatments-list').val()
+      });
+    }
 
-    $symptoms.val('');
-    $treatments.val('');
-    $diagnoses.val('');
-
-    $('select').attr('disabled', 'disabled');
-    $('select').select2({});
-    $('#finish-button').parent().hide();
-    $('#start-button').parent().show();
+    data = {symptoms, treatmentGroups, startTime, endTime, patientId, doctorId};
 
     let now = moment().format();
     Session.set('startTime', now);
@@ -136,5 +143,23 @@ Template.appointment.events({
   {
     e.preventDefault();
     FlowRouter.go(`/patientHistory/${FlowRouter.getParam('patientId')}`);
+  },
+  'click #add-treatment-group-button'(e, t)
+  {
+    e.preventDefault();
+
+    let $lastTreatmentGroup = $('.treatment-group').last(),
+        $ltgClone = $lastTreatmentGroup.clone();
+
+    $lastTreatmentGroup.after($ltgClone);
+    $ltgClone.find('.toothNumber').val('');
+    $ltgClone.find('.select2.select2-container').remove();
+    $ltgClone.find('select').select2();
+
+    let headerText = $ltgClone.find('h4').html(),
+        treatmentLabel = headerText.split(' ')[0],
+        treatmentNumber = parseInt(headerText.split(' ')[1]);
+
+    $ltgClone.find('h4').html(`${treatmentLabel} ${++treatmentNumber}`);
   }
 });
