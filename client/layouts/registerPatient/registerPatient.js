@@ -67,11 +67,27 @@ Template.registerPatient.onRendered(function(){
 					groupByResource: true
 				}
 			},
+      eventResize(e, delta, revertFunc, je, ui, view)
+      {
+        let start = e.start,
+            end = e.end;
+
+        const returnObject = Meteor.call('events.update', e._id, start.format(), end.format(), e.resourceId, function(err)
+        {
+          if(err)
+          {
+            toastr.error(err.reason);
+          }
+          else
+          {
+            toastr.success('Пациент перезаписан');
+          }
+        });
+      },
       eventClick(e, je, view)
       {
         const event = Events.findOne({_id: e._id});
-
-        FlowRouter.go(`/appointment/${event.patientId}?doctorId=${event.resourceId}`);
+        FlowRouter.go(`/appointment/${event.patientId}/${event._id}`);
       },
       eventDrop: function(event, delta){
         let start = event.start,

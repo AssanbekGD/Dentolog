@@ -4,6 +4,7 @@ import {Patients} from '../../../api/patients.js';
 import {Diagnoses} from '../../../api/diagnoses.js';
 import {Symptoms} from '../../../api/symptoms.js';
 import {Treatments} from '../../../api/treatments.js';
+import {Events} from '../../../api/events.js';
 
 Template.appointment.onRendered(function appointmentOnRendered(){
   Meteor.subscribe('patients', function(err){
@@ -13,7 +14,7 @@ Template.appointment.onRendered(function appointmentOnRendered(){
     }
     else
     {
-      const _id = FlowRouter.getParam('patientId');
+      const _id = FlowRouter.getParam('patientId'),
             currentPatient = Patients.findOne({ _id });
       Session.set('currentPatient', currentPatient);
     }
@@ -51,6 +52,14 @@ Template.appointment.onRendered(function appointmentOnRendered(){
       $(".treatments-list").select2();
     }
   });
+
+  Meteor.subscribe('events', function(err){
+    if(err)
+    {
+      toastr.error(err.reason);
+    }
+  });
+
 
   $('#finish-button').parent().hide();
   $('#add-treatment-group-button').parent().hide();
@@ -143,6 +152,23 @@ Template.appointment.events({
   {
     e.preventDefault();
     FlowRouter.go(`/patientHistory/${FlowRouter.getParam('patientId')}`);
+  },
+  'click #cancel-event-link'(e, t)
+  {
+    e.preventDefault();
+    let eventId = FlowRouter.getParam('eventId'),
+        patientId = FlowRouter.getParam('patientId');
+
+    Meteor.call('events.remove', FlowRouter.getParam('eventId'), function(err)
+    {
+      if(err)
+        toastr.error(err.reason);
+      else
+      {
+         toastr.success('Прием отменен');
+         FlowRouter.go('/registerPatient');
+      }
+    });
   },
   'click #add-treatment-group-button'(e, t)
   {

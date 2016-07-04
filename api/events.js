@@ -14,7 +14,6 @@ if(Meteor.isServer){
     },
     'events.update'(id, start, end, resourceId)
     {
-      console.log(`id is ${id}, start is ${start}, end is ${end}`);
       Events.update({_id: id},
       {
         $set: {
@@ -23,6 +22,10 @@ if(Meteor.isServer){
           resourceId: resourceId
         }
       });
+    },
+    'events.remove'(id)
+    {
+      Events.remove({_id: id});
     }
   });
 };
