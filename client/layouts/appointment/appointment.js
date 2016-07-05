@@ -120,7 +120,7 @@ Template.appointment.events({
           startTime = Session.get('startTime'),
           endTime = moment().format(),
           patientId = FlowRouter.getParam('patientId'),
-          doctorId = FlowRouter.getQueryParam('doctorId'),
+          doctorId = FlowRouter.getParam('doctorId'),
           $treatmentGroups = $('.treatment-group'),
           treatmentGroups = [];
 

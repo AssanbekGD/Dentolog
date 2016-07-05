@@ -62,7 +62,7 @@ FlowRouter.route('/createRole', {
   }
 });
 
-FlowRouter.route('/appointment/:patientId/:eventId', {
+FlowRouter.route('/appointment/:patientId/:eventId/:doctorId', {
   action(){
     BlazeLayout.render('mainLayout', {
       content: 'appointment'
