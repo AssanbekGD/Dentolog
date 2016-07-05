@@ -136,6 +136,7 @@ Template.registerPatient.onRendered(function(){
         if(!validateFields([$phone, $email, $name, $surname], highlightElement, highlightClass))
           return ;
 
+        newEvent._id = Random.id();
         newEvent.start = date.toISOString();
         newEvent.end = date.add(60, 'm').toISOString();
         newEvent.title = `${surname} ${name.charAt(0)}.
@@ -168,18 +169,15 @@ Template.registerPatient.onRendered(function(){
         Session.set('patient-on-list', false);
 
         thisTempl.newEvent.set(newEvent);
-        console.log('event to db adding');
+
+        newEvent.id = newEvent._id;
+        $('#doctorSchedule').fullCalendar('addEventSource', newEvent);
+        toastr.success('Пациент записан');
+
         Events.insert(newEvent, function(err, res){
-            toastr.success('insert end');
             if(err)
             {
               toastr.error(err.reason);
-            }
-            else
-            {
-              newEvent.id = res;
-              $('#doctorSchedule').fullCalendar('addEventSource', newEvent);
-              console.log('event added');
             }
         });
       },
