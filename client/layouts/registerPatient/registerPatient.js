@@ -150,7 +150,7 @@ Template.registerPatient.onRendered(function(){
         {
           let data = { phone, email, name, surname };
 
-          Patients.insert(data, function(err, res){
+          newEvent.patientId = Patients.insert(data, function(err){
             if(err)
             {
               toastr.error(err.reason);
@@ -158,7 +158,6 @@ Template.registerPatient.onRendered(function(){
             else
             {
               toastr.success('Новый пациент добавлен!');
-              newEvent.patientId = res;
             }
           });
         }
