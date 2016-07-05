@@ -121,14 +121,17 @@ Template.registerPatient.onRendered(function(){
         });
       },
 			dayClick: function(date, jsEvent, view, resource) {
-
         let $phone = $("#rp-phone"), phone = $phone.val(),
             $email = $("#rp-email"), email = $email.val(),
             $name = $("#rp-name"), name = $name.val(),
             $surname = $("#rp-surname"), surname = $surname.val(),
             newEvent = {},
             hasEmptyField = false,
-            highlightClass = 'red-border';
+            highlightClass = 'red-border',
+            reactiveTableInput = $('.reactive-table-input');
+
+        reactiveTableInput.val('');
+        reactiveTableInput.trigger('keyup');
 
         if(!validateFields([$phone, $email, $name, $surname], highlightElement, highlightClass))
           return ;
