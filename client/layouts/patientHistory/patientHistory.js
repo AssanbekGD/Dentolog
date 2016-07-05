@@ -40,7 +40,6 @@ Template.patientHistory.helpers({
   appointments()
   {
     const appointmentsCursor = Appointments.find({patientId: Session.get('patientId')});
-    console.log(appointmentsCursor);
     return appointmentsCursor;
   },
   getSymptomName(_id)

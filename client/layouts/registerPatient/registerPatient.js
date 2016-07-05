@@ -121,6 +121,7 @@ Template.registerPatient.onRendered(function(){
         });
       },
 			dayClick: function(date, jsEvent, view, resource) {
+
         let $phone = $("#rp-phone"), phone = $phone.val(),
             $email = $("#rp-email"), email = $email.val(),
             $name = $("#rp-name"), name = $name.val(),
@@ -145,7 +146,7 @@ Template.registerPatient.onRendered(function(){
         $surname.val('');
 
         Session.set("rp-phone", "");
-
+        console.log('patient adding');
         if(!Session.get('patient-on-list'))
         {
           let data = { phone, email, name, surname };
@@ -157,15 +158,16 @@ Template.registerPatient.onRendered(function(){
             }
             else
             {
-              toastr.success('Новый пациент добавлен!');
+              console.log('patient added');
             }
           });
         }
         Session.set('patient-on-list', false);
 
         thisTempl.newEvent.set(newEvent);
-
+        console.log('event to db adding');
         Events.insert(newEvent, function(err, res){
+            toastr.success('insert end');
             if(err)
             {
               toastr.error(err.reason);
@@ -174,7 +176,7 @@ Template.registerPatient.onRendered(function(){
             {
               newEvent.id = res;
               $('#doctorSchedule').fullCalendar('addEventSource', newEvent);
-              toastr.success('Прием добавлен')
+              console.log('event added');
             }
         });
       },

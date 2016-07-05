@@ -5,6 +5,7 @@ import {Diagnoses} from '../../../api/diagnoses.js';
 import {Symptoms} from '../../../api/symptoms.js';
 import {Treatments} from '../../../api/treatments.js';
 import {Events} from '../../../api/events.js';
+import {Appointments} from '../../../api/appointments.js';
 
 Template.appointment.onRendered(function appointmentOnRendered(){
   Meteor.subscribe('patients', function(err){
