@@ -7,6 +7,18 @@ if(Meteor.isServer){
     return Events.find();
   });
 
+  Events.allow({
+    insert(){
+      return true; //edit this before production
+    },
+    update(){
+      return true; //edit this before production
+    },
+    remove(){
+      return true; //edit this before production
+    }
+  });
+
   Meteor.methods({
     'events.insert'(data)
     {

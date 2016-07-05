@@ -8,7 +8,13 @@ if(Meteor.isServer)
   Meteor.publish('patients', function patientsPublication()
   {
     return Patients.find();
-  })
+  });
+
+  Patients.allow({
+    insert(){
+      return true; //edit this before production
+    }
+  });
 
   Meteor.methods({
     'patients.insert'(data)

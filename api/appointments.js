@@ -8,6 +8,12 @@ if(Meteor.isServer)
     return Appointments.find();
   });
 
+  Appointments.allow({
+    insert(){
+      return true; //edit this before production
+    }
+  });
+
   Meteor.methods({
     'appointments.insert'(data)
     {

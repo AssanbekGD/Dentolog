@@ -1,6 +1,7 @@
 import './registerPatient.html';
 
 import {Template} from 'meteor/templating';
+
 import {Patients} from '../../../api/patients.js';
 import {Doctors} from '../../../api/doctors.js';
 import {Events} from '../../../api/events.js';
@@ -72,7 +73,14 @@ Template.registerPatient.onRendered(function(){
         let start = e.start,
             end = e.end;
 
-        const returnObject = Meteor.call('events.update', e._id, start.format(), end.format(), e.resourceId, function(err)
+        const returnObject = Events.update({_id: e._id},
+        {
+          $set: {
+            start: start.format(),
+            end: end.format(),
+            resourceId: e.resourceId
+          }
+        }, function(err)
         {
           if(err)
           {
@@ -80,7 +88,7 @@ Template.registerPatient.onRendered(function(){
           }
           else
           {
-            toastr.success('Пациент перезаписан');
+            toastr.success('Прием перезаписан');
           }
         });
       },
@@ -93,7 +101,14 @@ Template.registerPatient.onRendered(function(){
         let start = event.start,
             end = event.end;
 
-        const returnObject = Meteor.call('events.update', event._id, start.format(), end.format(), event.resourceId, function(err)
+        const returnObject = Events.update({_id: event._id},
+        {
+          $set: {
+            start: start.format(),
+            end: end.format(),
+            resourceId: event.resourceId
+          }
+        }, function(err)
         {
           if(err)
           {
@@ -101,7 +116,7 @@ Template.registerPatient.onRendered(function(){
           }
           else
           {
-            toastr.success('Пациент перезаписан');
+            toastr.success('Прием перезаписан');
           }
         });
       },
@@ -135,7 +150,7 @@ Template.registerPatient.onRendered(function(){
         {
           let data = { phone, email, name, surname };
 
-          Meteor.call('patients.insert', data, function(err, res){
+          Patients.insert(data, function(err, res){
             if(err)
             {
               toastr.error(err.reason);
@@ -151,11 +166,16 @@ Template.registerPatient.onRendered(function(){
 
         thisTempl.newEvent.set(newEvent);
 
-        Meteor.call('events.insert', newEvent, function(err, res){
-            if(!err)
+        Events.insert(newEvent, function(err, res){
+            if(err)
+            {
+              toastr.error(err.reason);
+            }
+            else
             {
               newEvent.id = res;
-              $('#doctorSchedule').fullCalendar('addEventSource', [newEvent]);
+              $('#doctorSchedule').fullCalendar('addEventSource', newEvent);
+              toastr.success('Прием добавлен')
             }
         });
       },

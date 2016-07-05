@@ -137,7 +137,7 @@ Template.appointment.events({
     let now = moment().format();
     Session.set('startTime', now);
 
-    Meteor.call('appointments.insert', data, function(err){
+    Appointments.insert(data, function(err){
       if(err)
       {
         toastr.error(err.reason);
@@ -159,7 +159,7 @@ Template.appointment.events({
     let eventId = FlowRouter.getParam('eventId'),
         patientId = FlowRouter.getParam('patientId');
 
-    Meteor.call('events.remove', FlowRouter.getParam('eventId'), function(err)
+    Events.remove({_id: FlowRouter.getParam('eventId')}, function(err)
     {
       if(err)
         toastr.error(err.reason);
