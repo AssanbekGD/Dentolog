@@ -19,7 +19,8 @@ Template.registerPatient.onCreated(function(){
 Template.registerPatient.onRendered(function(){
   let doctorsCursor = Doctors.find(),
       eventCursor = Events.find(),
-      thisTempl = this;
+      thisTempl = this,
+      $doctorSchedule = $('#doctorSchedule');
 
   let autorunFunction = function(){
     const doctors = doctorsCursor.fetch(),
@@ -35,19 +36,19 @@ Template.registerPatient.onRendered(function(){
       };
 
       resources.push(resource);
-      $('#doctorSchedule').fullCalendar('addResource', resource);
+      $doctorSchedule.fullCalendar('addResource', resource);
     });
 
     events.forEach(function(event){
       event.id = event._id;
-      $('#doctorSchedule').fullCalendar('removeEvents', event.id);
-      $('#doctorSchedule').fullCalendar('addEventSource', [event]);
+      $doctorSchedule.fullCalendar('removeEvents', event.id);
+      $doctorSchedule.fullCalendar('renderEvent', event, true);
     });
   };
 
   let handler = Tracker.autorun(autorunFunction);
 
-  $('#doctorSchedule').fullCalendar({
+  $doctorSchedule.fullCalendar({
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
 			defaultView: 'agendaDay',
 			defaultDate: Date.now(),
@@ -73,6 +74,8 @@ Template.registerPatient.onRendered(function(){
         let start = e.start,
             end = e.end;
 
+        toastr.success('Прием перезаписан');
+
         const returnObject = Events.update({_id: e._id},
         {
           $set: {
@@ -86,10 +89,6 @@ Template.registerPatient.onRendered(function(){
           {
             toastr.error(err.reason);
           }
-          else
-          {
-            toastr.success('Прием перезаписан');
-          }
         });
       },
       eventClick(e, je, view)
@@ -100,6 +99,8 @@ Template.registerPatient.onRendered(function(){
       eventDrop: function(event, delta){
         let start = event.start,
             end = event.end;
+
+        toastr.success('Прием перезаписан');
 
         const returnObject = Events.update({_id: event._id},
         {
@@ -113,10 +114,6 @@ Template.registerPatient.onRendered(function(){
           if(err)
           {
             toastr.error(err.reason);
-          }
-          else
-          {
-            toastr.success('Прием перезаписан');
           }
         });
       },
@@ -150,7 +147,11 @@ Template.registerPatient.onRendered(function(){
         $surname.val('');
 
         Session.set("rp-phone", "");
-        console.log('patient adding');
+
+        newEvent.id = newEvent._id;
+        $doctorSchedule.fullCalendar('renderEvent', newEvent, true);
+        toastr.success('Пациент записан');
+
         if(!Session.get('patient-on-list'))
         {
           let data = { phone, email, name, surname };
@@ -169,10 +170,6 @@ Template.registerPatient.onRendered(function(){
         Session.set('patient-on-list', false);
 
         thisTempl.newEvent.set(newEvent);
-
-        newEvent.id = newEvent._id;
-        $('#doctorSchedule').fullCalendar('addEventSource', newEvent);
-        toastr.success('Пациент записан');
 
         Events.insert(newEvent, function(err, res){
             if(err)
