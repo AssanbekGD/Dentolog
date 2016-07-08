@@ -7,7 +7,7 @@
       <div class="box-body">
         <div class="form-group">
           <label for="register-phone">Название</label>
-          <input type="text" class="form-control" id="cts-name" placeholder="стоматолог-футболист">
+          <input type="text" class="form-control" id="cts-name" placeholder="глубокий кариес">
         </div>
         <div class="box-footer">
           <button id="cts-submit" type="submit" class="btn btn-primary">Создать</button>
@@ -21,7 +21,7 @@
         <th style="width: 10px">№</th>
         <th>Имя</th>
       </tr>
-      {{#each toothStatus}}
+      {{#each toothStatuses}}
       <tr>
         <td>{{incIndex @index}}</td>
         <td>{{name}}</td>

@@ -1,14 +1,21 @@
+import './createToothStatus.html';
 import {Template} from 'meteor/templating';
-import {ToothStatuses} from '../../../api/toothStatuses';
+import {ToothStatuses} from '../../../api/toothStatuses.js';
+
+Meteor.subscribe('toothStatuses');
 
 Template.createToothStatus.helpers({
   toothStatuses()
   {
-    return toothStatuses.find();
+    return ToothStatuses.find();
+  },
+  incIndex(i)
+  {
+    return i + 1;
   }
 });
 
-Template.createDoctorType.events({
+Template.createToothStatus.events({
   'click #cts-submit'(e, t)
   {
     e.preventDefault();
