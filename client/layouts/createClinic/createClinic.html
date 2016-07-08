@@ -23,4 +23,22 @@
       </div>
     </form>
   </div>
+  <div class="box-body">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th style="width: 10px">№</th>
+        <th>Имя</th>
+        <th>Адрес</th>
+        <th>Вебсайт</th>
+      </tr>
+      {{#each clinics}}
+      <tr>
+        <td>{{incIndex @index}}</td>
+        <td>{{name}}</td>
+        <td>{{address}}</td>
+        <td>{{website}}</td>
+      </tr>
+      {{/each}}
+    </tbody></table>
+  </div>
 </template>

@@ -95,6 +95,7 @@ Template.registerPatient.onRendered(function(){
       {
         const event = Events.findOne({_id: e._id});
         FlowRouter.go(`/appointment/${e.patientId}/${e._id}/${e.resourceId}`);
+        window.scrollTo(0, 0);
       },
       eventDrop: function(event, delta){
         let start = event.start,

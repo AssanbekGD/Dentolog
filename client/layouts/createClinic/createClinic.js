@@ -4,6 +4,17 @@ import {Clinics} from '../../../api/clinics.js';
 
 Meteor.subscribe('clinics');
 
+Template.createClinic.helpers({
+  clinics()
+  {
+    return Clinics.find();
+  },
+  incIndex(i)
+  {
+    return i + 1;
+  }
+});
+
 Template.createClinic.events({
   'click #cc-submit'(e, t)
   {

@@ -56,5 +56,29 @@
         </div>
       </form>
     </div>
+    <div class="box-body">
+      <table class="table table-bordered">
+        <tbody><tr>
+          <th style="width: 10px">№</th>
+          <th>Имя</th>
+          <th>Фамилия</th>
+          <th>Телефон</th>
+          <th>Email</th>
+          <th>Клиника</th>
+          <th>Тип</th>
+        </tr>
+        {{#each doctors}}
+        <tr>
+          <td>{{incIndex @index}}</td>
+          <td>{{name}}</td>
+          <td>{{surname}}</td>
+          <td>{{phone}}</td>
+          <td>{{email}}</td>
+          <td>{{getClinic clinic}}</td>
+          <td>{{getDoctorType doctorType}}</td>
+        </tr>
+        {{/each}}
+      </tbody></table>
+    </div>
   </section>
 </template>

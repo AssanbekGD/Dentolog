@@ -3,6 +3,7 @@ import './createDoctor.html';
 import {Template} from 'meteor/templating';
 import {Clinics} from '../../../api/clinics.js';
 import {DoctorTypes} from '../../../api/doctorTypes.js';
+import {Doctors} from '../../../api/doctors.js';
 
 Meteor.subscribe('clinics');
 Meteor.subscribe('doctorTypes');
@@ -15,6 +16,24 @@ Template.createDoctor.helpers({
   doctorTypes()
   {
     return DoctorTypes.find();
+  },
+  getDoctorType(_id)
+  {
+    doctorType = DoctorTypes.findOne({_id});
+    return doctorType.name;
+  },
+  getClinic(_id)
+  {
+    clinic = Clinics.findOne({_id});
+    return clinic.name;
+  },
+  doctors()
+  {
+    return Doctors.find();
+  },
+  incIndex(i)
+  {
+    return i + 1;
   }
 });
 

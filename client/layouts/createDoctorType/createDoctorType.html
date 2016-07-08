@@ -15,4 +15,18 @@
       </div>
     </form>
   </div>
+  <div class="box-body">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th style="width: 10px">№</th>
+        <th>Имя</th>
+      </tr>
+      {{#each doctorTypes}}
+      <tr>
+        <td>{{incIndex @index}}</td>
+        <td>{{name}}</td>
+      </tr>
+      {{/each}}
+    </tbody></table>
+  </div>
 </template>
