@@ -101,3 +101,11 @@ FlowRouter.route('/patientHistory/:patientId', {
     });
   }
 });
+
+FlowRouter.route('/createToothStatus', {
+  action(){
+    BlazeLayout.render('mainLayout', {
+      content: 'createToothStatus'
+    });
+  }
+});

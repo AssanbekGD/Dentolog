@@ -1,0 +1,32 @@
+<template name="createToothStatus">
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Добавьте статус зуба</h3>
+    </div>
+    <form role="form">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="register-phone">Название</label>
+          <input type="text" class="form-control" id="cts-name" placeholder="стоматолог-футболист">
+        </div>
+        <div class="box-footer">
+          <button id="cts-submit" type="submit" class="btn btn-primary">Создать</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="box-body">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th style="width: 10px">№</th>
+        <th>Имя</th>
+      </tr>
+      {{#each toothStatus}}
+      <tr>
+        <td>{{incIndex @index}}</td>
+        <td>{{name}}</td>
+      </tr>
+      {{/each}}
+    </tbody></table>
+  </div>
+</template>
