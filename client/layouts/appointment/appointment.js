@@ -8,6 +8,12 @@ import {Events} from '../../../api/events.js';
 import {Appointments} from '../../../api/appointments.js';
 
 Template.appointment.onRendered(function appointmentOnRendered(){
+  Session.set('teethNumbers', [8, 7, 6, 5, 4, 3, 2, 1, 1, 2, 3, 4, 5, 6, 7, 8]);
+  Session.set('teeth', {
+    top: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    bottom: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  });
+
   Meteor.subscribe('patients', function(err){
     if(err)
     {
@@ -67,6 +73,18 @@ Template.appointment.onRendered(function appointmentOnRendered(){
 });
 
 Template.appointment.helpers({
+  topTeeth()
+  {
+    return Session.get('teethNumbers');
+  },
+  teethNumbers()
+  {
+    return Session.get('teethNumbers');
+  },
+  bottomTeeth()
+  {
+    return Session.get('teethNumbers');
+  },
   patientId()
   {
     return Session.get('currentPatient')._id;
@@ -98,6 +116,18 @@ Template.appointment.helpers({
 
 
 Template.appointment.events({
+  'keyup .tooth-cell'(e, t)
+  {
+    let toothName = e.target.getAttribute('data-tooth-name'),
+        status = e.target.innerText,
+        array = toothName.split('-'),
+        part = array[0],
+        index = parseInt(array[1]),
+        teeth = Session.get('teeth');
+
+    teeth[part][index] = status;
+    Session.set('teeth', teeth);
+  },
   'click #start-button'(e, t)
   {
     e.preventDefault();
@@ -122,7 +152,8 @@ Template.appointment.events({
           patientId = FlowRouter.getParam('patientId'),
           doctorId = FlowRouter.getParam('doctorId'),
           $treatmentGroups = $('.treatment-group'),
-          treatmentGroups = [];
+          treatmentGroups = [],
+          teeth = Session.get('teeth');
 
     for(let i = 0, len = $treatmentGroups.length; i < len; i ++)
     {
@@ -133,7 +164,7 @@ Template.appointment.events({
       });
     }
 
-    data = {symptoms, treatmentGroups, startTime, endTime, patientId, doctorId};
+    data = {symptoms, treatmentGroups, startTime, endTime, patientId, doctorId, teeth};
 
     let now = moment().format();
     Session.set('startTime', now);

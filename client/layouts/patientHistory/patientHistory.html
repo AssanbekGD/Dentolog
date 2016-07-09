@@ -34,6 +34,29 @@
         </div>
         <div id="collapseOne{{@index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
+            <div class="row">
+              <div class="info-group col-sm-12">
+                <label>Формы зубов</label>
+                <table border='1' class='teeth-shape-table'>
+                  <tr>
+                    {{#each status in teeth.top}}
+                      <td class='tooth-cell'>{{status}}</td>
+                    {{/each}}
+                  </tr>
+                  <tr>
+                    {{#each number in teethNumbers}}
+                      <td><strong>{{number}}</strong></td>
+                    {{/each}}
+                  </tr>
+                  <tr>
+                    {{#each status in teeth.bottom}}
+                      <td class='tooth-cell'>{{status}}</td>
+                    {{/each}}
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <hr>
           {{#each treatmentGroups}}
             <div class="row">
               <div class="info-group col-sm-4">

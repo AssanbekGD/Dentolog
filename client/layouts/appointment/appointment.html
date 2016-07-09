@@ -13,6 +13,26 @@
       <form id="create-appointment-form" role="form">
         <div class="box-body">
           <div class="form-group">
+            <label>Формы зубов</label>
+            <table border='1' class='teeth-shape-table'>
+              <tr>
+                {{#each topTeeth}}
+                  <td class='tooth-cell' data-tooth-name='top-{{@index}}' contenteditable></td>
+                {{/each}}
+              </tr>
+              <tr>
+                {{#each number in teethNumbers}}
+                  <td><strong>{{number}}</strong></td>
+                {{/each}}
+              </tr>
+              <tr>
+                {{#each bottomTeeth}}
+                  <td class='tooth-cell' data-tooth-name='bottom-{{@index}}' contenteditable></td>
+                {{/each}}
+              </tr>
+            </table>
+          </div>
+          <div class="form-group">
             <label>Симптомы</label>
             <select disabled required id="symptoms-list" class="form-control symptoms-select2" multiple="multiple" data-placeholder="выберите симптомы" style="width: 100%;">
               {{#each symptoms}}
