@@ -94,7 +94,15 @@ Template.registerPatient.onRendered(function(){
       eventClick(e, je, view)
       {
         const event = Events.findOne({_id: e._id});
-        FlowRouter.go(`/appointment/${e.patientId}/${e._id}/${e.resourceId}`);
+        if(event.finished)
+        {
+          FlowRouter.go(`/patientHistory/${e.patientId}`);
+        }
+        else
+        {
+          FlowRouter.go(`/appointment/${e.patientId}/${e._id}/${e.resourceId}`);
+        }
+
         window.scrollTo(0, 0);
       },
       eventDrop: function(event, delta){
@@ -141,6 +149,7 @@ Template.registerPatient.onRendered(function(){
         (${phone})`;
         newEvent.resourceId = resource.id,
         newEvent.patientId = Session.get('patient-id');
+        newEvent.finished = false;
 
         $phone.val('');
         $email.val('');

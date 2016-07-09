@@ -148,6 +148,18 @@ Template.appointment.events({
         toastr.success('Прием добавлен в базу данных');
       }
     });
+
+    Events.update({_id: FlowRouter.getParam('eventId')}, {$set: {finished: true}},
+    function(err){
+      if(err)
+      {
+        toastr.error(err.reason);
+      }
+      else
+      {
+        toastr.success('Статус события изменен');
+      }
+    });
   },
   'click #history-link'(e, t)
   {
