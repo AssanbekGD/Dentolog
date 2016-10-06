@@ -6,7 +6,8 @@ Meteor.subscribe('clinics');
 
 Template.mainLayout.helpers({
   clinic: function(){
-    return Clinics.find({_id: Meteor.user().profile.clinic});
+    if(Meteor.user())
+      return Clinics.find({_id: Meteor.user().profile.clinic});
   }
 });
 
