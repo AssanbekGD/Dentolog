@@ -19,10 +19,6 @@ module.exports = {
     buildOptions: {
       serverOnly: true,
     },
-    env: {
-      ROOT_URL: 'http://localhost:3000/',
-      MONGO_URL: 'http://localhost:3001/'
-    },
 
     //dockerImage: 'kadirahq/meteord'
     deployCheckWaitTime: 120
