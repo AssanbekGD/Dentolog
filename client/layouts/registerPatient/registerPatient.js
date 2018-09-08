@@ -131,6 +131,7 @@ Template.registerPatient.onRendered(function(){
             $email = $("#rp-email"), email = $email.val(),
             $name = $("#rp-name"), name = $name.val(),
             $surname = $("#rp-surname"), surname = $surname.val(),
+            $iin = $("#rp-iin"), iin = $iin.val(),
             newEvent = {},
             hasEmptyField = false,
             highlightClass = 'red-border',
@@ -139,7 +140,7 @@ Template.registerPatient.onRendered(function(){
         reactiveTableInput.val('');
         reactiveTableInput.trigger('keyup');
 
-        if(!validateFields([$phone, $email, $name, $surname], highlightElement, highlightClass))
+        if(!validateFields([$phone, $email, $name, $surname, $iin], highlightElement, highlightClass))
           return ;
 
         newEvent._id = Random.id();
@@ -155,6 +156,7 @@ Template.registerPatient.onRendered(function(){
         $email.val('');
         $name.val('');
         $surname.val('');
+        $iin.val('');
 
         Session.set("rp-phone", "");
 
@@ -164,7 +166,7 @@ Template.registerPatient.onRendered(function(){
 
         if(!Session.get('patient-on-list'))
         {
-          let data = { phone, email, name, surname };
+          let data = { phone, email, name, surname, iin };
 
           newEvent.patientId = Patients.insert(data, function(err){
             if(err)
@@ -209,6 +211,7 @@ Template.registerPatient.events({
         email = $("#rp-email").val(),
         name = $("#rp-name").val(),
         surname = $("#rp-surname").val(),
+        iin = $("#rp-iin").val(),
         combo = "",
         reactiveTableInput = $('.reactive-table-input');
 
@@ -220,6 +223,8 @@ Template.registerPatient.events({
       combo = `${combo} ${email} `;
     if(phone !== "")
       combo = `${combo} ${phone} `;
+     if(iin !== "")
+      combo = `${combo} ${iin} `;
 
     reactiveTableInput.val(combo);
     reactiveTableInput.trigger('keyup');
@@ -233,7 +238,7 @@ Template.registerPatient.helpers({
         collection: Patients,
         rowsPerPage: 5,
         showFilter: true,
-        fields: ['name', 'surname', 'email', 'phone']
+        fields: ['name', 'surname', 'email', 'phone','iin']
     };
   },
   patientData()

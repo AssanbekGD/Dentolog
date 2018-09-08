@@ -12,6 +12,12 @@ if(Meteor.isServer)
     'doctors.insert'(data)
     {
       return Doctors.insert(data);
+    },
+    'doctors.delete'(data){
+      Doctors.remove(data)
     }
   });
+
+
+
 }

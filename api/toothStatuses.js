@@ -12,6 +12,17 @@ if(Meteor.isServer)
     'toothStatuses.insert'(data)
     {
       return ToothStatuses.insert(data);
+    },
+    'toothStatuses.delete'(data)
+    {
+      ToothStatuses.remove(data);
+    },
+    'toothStatuses.edit'(data)
+    {
+      ToothStatuses.update(data.id, {
+      $set: { name: data.name},
     }
+  );
+}
   });
 }

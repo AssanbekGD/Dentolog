@@ -33,7 +33,7 @@
             </div>
             <br />
             <div class="form-group">
-              <label>выберите клинику</label>
+              <label>Выберите клинику</label>
               <select id="cd-clinic" class="form-control">
                 {{#each clinics}}
                 <option value="{{_id}}">{{name}}</option>
@@ -42,7 +42,7 @@
             </div>
             <br />
             <div class="form-group">
-              <label>выберите тип врача</label>
+              <label>Выберите тип врача</label>
               <select id="cd-doctor-type" class="form-control">
                 {{#each doctorTypes}}
                 <option value="{{_id}}">{{name}}</option>
@@ -51,14 +51,20 @@
             </div>
           </div>
           <div class="box-footer">
-            <button type="submit" class="pull-right btn btn-primary">Submit</button>
+            <button type="submit" class="pull-right btn btn-primary">Добавить</button>
           </div>
         </div>
       </form>
     </div>
+    <div class="pull-right  form-group">
+    <form >
+    <div><input id="search" class="form-control" placeholder="Search"></div>
+    </form>
+  </div>
     <div class="box-body">
       <table class="table table-bordered">
-        <tbody><tr>
+        <tbody ><tr>
+          <!-- <th></th> -->
           <th style="width: 10px">№</th>
           <th>Имя</th>
           <th>Фамилия</th>
@@ -68,17 +74,23 @@
           <th>Тип</th>
         </tr>
         {{#each doctors}}
-        <tr>
-          <td>{{incIndex @index}}</td>
-          <td>{{name}}</td>
-          <td>{{surname}}</td>
-          <td>{{phone}}</td>
-          <td>{{email}}</td>
-          <td>{{getClinic clinic}}</td>
-          <td>{{getDoctorType doctorType}}</td>
+        <tr class="doctor">
+          <!-- <td><input type="radio"></td>   -->
+          <td >{{incIndex @index}}</td>
+          <td contenteditable>{{name}}</td>
+          <td contenteditable>{{surname}}</td>
+          <td contenteditable>{{phone}}</td>
+          <td contenteditable>{{email}}</td>
+          <td contenteditable>{{getClinic clinic}}</td>
+          <td contenteditable>{{getDoctorType doctorType}}</td>
+
+
+          <button class="pull-right btn btn-primary deleteDoctor" >Удалить</button>
         </tr>
-        {{/each}}
-      </tbody></table>
-    </div>
+           {{/each}}
+      </tbody> </table>
+
+
+     </div>
   </section>
 </template>

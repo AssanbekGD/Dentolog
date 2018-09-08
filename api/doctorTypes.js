@@ -12,6 +12,15 @@ if(Meteor.isServer)
     'doctorTypes.insert'(data)
     {
       return DoctorTypes.insert(data);
-    }
+    },
+    'doctorTypes.delete'(data){
+      DoctorTypes.remove(data)
+    },
+    'doctorTypes.edit'(data)
+    {
+      DoctorTypes.update(data.id, {
+      $set: { name: data.name},
+    });
+  }
   });
 }

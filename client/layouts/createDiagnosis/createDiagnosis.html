@@ -16,6 +16,12 @@
     </form>
   </div>
   <div class="box-body">
+    <div class="pull-right  form-group">
+    <form >
+      <div><input id="search" class="form-control" placeholder="Search"></div>
+    </form>
+
+  </div>
     <table class="table table-bordered">
       <tbody><tr>
         <th style="width: 10px">№</th>
@@ -24,7 +30,9 @@
       {{#each diagnoses}}
       <tr>
         <td>{{incIndex @index}}</td>
-        <td>{{name}}</td>
+        <td class="name" contenteditable>{{name}}</td>
+<button class="pull-right btn btn-primary deleteDiagnos" >Удалить</button>
+          <button class="pull-right btn btn-primary editDiagnos" >Изменить</button>
       </tr>
       {{/each}}
     </tbody></table>

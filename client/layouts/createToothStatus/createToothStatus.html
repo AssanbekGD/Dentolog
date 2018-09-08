@@ -24,7 +24,11 @@
       {{#each toothStatuses}}
       <tr>
         <td>{{incIndex @index}}</td>
-        <td contenteditable>{{name}}</td>
+        <td class="name" contenteditable>{{name}}
+          <!--<input class="statusname" type="text" value="{{name}}" placeholder="test" />-->
+          </td>
+        <button class="pull-right btn btn-primary deleteStatus" >Удалить</button>
+          <button class="pull-right btn btn-primary editStatus" >Изменить</button>
       </tr>
       {{/each}}
     </tbody></table>

@@ -12,6 +12,15 @@ if(Meteor.isServer)
     'treatments.insert'(data)
     {
       Treatments.insert(data);
-    }
+    },
+    'treatments.delete'(data){
+      Treatments.remove(data)
+    },
+    'treatments.edit'(data)
+    {
+      Treatments.update(data.id, {
+      $set: { name: data.name},
+    });
+  }
   });
 }

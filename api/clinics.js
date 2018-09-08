@@ -12,6 +12,9 @@ if(Meteor.isServer)
     'clinics.insert'(data)
     {
       Clinics.insert(data);
+    },
+    'clinics.delete'(data){
+      Clinics.remove(data)
     }
   });
 }

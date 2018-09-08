@@ -35,7 +35,11 @@ Template.createDoctor.helpers({
   {
     return i + 1;
   }
+
+
 });
+
+
 
 Template.createDoctor.events({
   'submit #cd-form'(e, t)
@@ -64,12 +68,41 @@ Template.createDoctor.events({
       }
       else
       {
-        toastr.success('новый врач добавлен');
+        toastr.success('Новый врач добавлен');
         $phone.val('');
         $email.val('');
         $name.val('');
         $surname.val('');
       }
     });
+  }
+
+
+});
+
+Template.createDoctor.events({
+  'click .deleteDoctor': function (event,) {
+  Meteor.call('doctors.delete', this._id, function(err, result){
+    if(err){
+      toastr.error(err.reason);
+    }
+    else {
+      toastr.success('Врач удален');
+    }
+  })
+}
+});
+
+
+Template.createDoctor.helpers({
+  doctors: function () {
+    var regexp = new RegExp(Session.get('search/keyword'), 'i');
+    return Doctors.find({name: regexp});
+  }
+});
+
+Template.createDoctor.events({
+  'keyup #search': function(event) {
+    Session.set('search/keyword', event.target.value);
   }
 });

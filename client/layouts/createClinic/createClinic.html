@@ -1,5 +1,6 @@
 <template name="createClinic">
   <div class="box box-primary">
+
     <div class="box-header with-border">
       <h3 class="box-title">Добавление клиники</h3>
     </div>
@@ -7,7 +8,7 @@
       <div class="box-body">
         <div class="form-group">
           <label for="register-phone">Название</label>
-          <input type="text" class="form-control" id="cc-name" placeholder="стоматологическая линика FreshBreath">
+          <input type="text" class="form-control" id="cc-name" placeholder="Cтоматологическая линика FreshBreath">
         </div>
         <div class="form-group">
           <label for="register-email">Адрес</label>
@@ -23,22 +24,34 @@
       </div>
     </form>
   </div>
+<div class="pull-right  form-group">
+    <form >
+      <div><input id="search" class="form-control" placeholder="Search"></div>
+    </form>
+  </div>
   <div class="box-body">
     <table class="table table-bordered">
       <tbody><tr>
+
         <th style="width: 10px">№</th>
         <th>Имя</th>
         <th>Адрес</th>
         <th>Вебсайт</th>
       </tr>
+
       {{#each clinics}}
       <tr>
+
         <td>{{incIndex @index}}</td>
         <td>{{name}}</td>
         <td>{{address}}</td>
         <td>{{website}}</td>
+
+    <button class="pull-right btn btn-primary deleteClinic" >Удалить</button>
+
       </tr>
       {{/each}}
     </tbody></table>
+
   </div>
 </template>

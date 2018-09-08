@@ -24,7 +24,9 @@
       {{#each roles}}
       <tr>
         <td>{{incIndex @index}}</td>
-        <td>{{name}}</td>
+        <td class="name" contenteditable>{{name}}</td>
+          <button class="pull-right btn btn-primary deleteRole" >Удалить</button>
+  <button class="pull-right btn btn-primary editRole" >Изменить</button>
       </tr>
       {{/each}}
     </tbody></table>

@@ -12,6 +12,15 @@ if(Meteor.isServer)
     'roles.insert'(data)
     {
       Roles.insert(data);
-    }
+    },
+    'role.delete'(data){
+      Roles.remove(data)
+    },
+    'roles.edit'(data)
+    {
+      Roles.update(data.id, {
+      $set: { name: data.name},
+    });
+  }
   });
 }

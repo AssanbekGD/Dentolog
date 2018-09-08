@@ -56,3 +56,6 @@ momentjs:moment
 
 #for generating ids on client-side
 random@1.0.10
+check
+ejson
+reactive-dict

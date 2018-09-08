@@ -12,6 +12,15 @@ if(Meteor.isServer)
     'symptoms.insert'(data)
     {
       Symptoms.insert(data);
-    }
-  });
+    },
+    'symptoms.delete'(data)
+    {
+      Symptoms.remove(data);
+    },
+    'symptoms.edit'(data)
+    {
+      Symptoms.update(data.id, {
+      $set: { name: data.name},
+    });
+  }});
 }
